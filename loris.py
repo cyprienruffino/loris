@@ -45,9 +45,9 @@ def main():
 
         for _ in range(nbsockets - len(sockets)):
             try:
-                s = createsocket(ip)
-                if s:
-                    sockets.append(socket)
+                sn = createsocket(ip)
+                if sn:
+                    sockets.append(sn)
             except socket.error:
                 break
         time.sleep(15)
